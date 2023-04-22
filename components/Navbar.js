@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 function Navbar() {
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
+
   return (
     <nav className="header">
       <h1 className="logo">
@@ -10,46 +12,40 @@ function Navbar() {
       </h1>
       <ul className={`main-nav ${!session && loading ? "loading" : "loaded"}`}>
         <li>
-          <Link href="/">
-            <a>Home</a>
-          </Link>
+          <Link href="/">Home</Link>
         </li>
         <li>
-          <Link href="/dashboard">
-            <a>Dashboard</a>
-          </Link>
+          <Link href="/dashboard">Dashboard</Link>
         </li>
         <li>
-          <Link href="/blog">
-            <a>Blog</a>
-          </Link>
+          <Link href="/blog">Blog</Link>
         </li>
 
         {!loading && !session && (
           <li>
             <Link href="/api/auth/signin">
-              <a
+              <span
                 onClick={(e) => {
                   e.preventDefault();
                   signIn("github");
                 }}
               >
                 Sign In
-              </a>
+              </span>
             </Link>
           </li>
         )}
         {session && (
           <li>
             <Link href="/api/auth/signout">
-              <a
+              <span
                 onClick={(e) => {
                   e.preventDefault();
                   signOut();
                 }}
               >
                 Sign Out
-              </a>
+              </span>
             </Link>
           </li>
         )}
