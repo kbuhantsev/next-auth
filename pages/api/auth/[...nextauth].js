@@ -11,3 +11,6 @@ export const authOptions = {
 };
 
 export default NextAuth(authOptions);
+
+// GITHUB_ID=f56d4eb72ea1163110b5
+// GITHUB_SECRET=555e3188436b7384371ef135fedf2bc574b9e68a
